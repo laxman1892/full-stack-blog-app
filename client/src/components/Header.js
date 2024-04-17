@@ -30,6 +30,7 @@ export default function Header() {
           BlogApp
         </Link>
         <nav>
+          {/* tomorrow's work: displaying these links after login, now not working */}
           {username && (
             <>
               <Link to="/create">Create new posts</Link>
