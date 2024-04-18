@@ -7,6 +7,7 @@ export default function Signup() {
 
   async function register(event) {
     event.preventDefault();
+    // ? 👇 sending a post request to the '/signup' endpoint with the user data
     const response = await fetch("http://localhost:4000/signup", {
       method: "POST",
       body: JSON.stringify({ username, email, password }),

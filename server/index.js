@@ -8,10 +8,12 @@ const cookieParser = require('cookie-parser');
 
 const app = express();
 
+// ! enabling cors and json parsing
 app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 app.use(express.json());
 app.use(cookieParser());
 
+// * 👇  Connecting to MongoDB database
 main().catch((err) => console.log(err));
 
 async function main() {
@@ -21,9 +23,10 @@ async function main() {
 const db = mongoose.connection;
 db.once("connected", () => console.log("Connected to MongoDB!"));
 
-const salt = bcrypt.genSaltSync(10);
-const jwtSalt = 'lshjogihqwoihq209u523h5klhdklhfowieh';
+const salt = bcrypt.genSaltSync(10); // salt for password hashing
+const jwtSalt = 'lshjogihqwoihq209u523h5klhdklhfowieh'; //jwt salt for  signing tokens
 
+// todo 👇 signup route to get user details from the body and putting the details on database
 app.post('/signup', async (req, res) => {
     const { username, email, password } = req.body;
     try {
@@ -35,14 +38,16 @@ app.post('/signup', async (req, res) => {
     
 });
 
+// todo 👇 login route  that will check if the entered credentials are valid or not by comparing with the data in the database
 app.post('/login', async (req, res) => {
   const { username, password } = req.body;
   const userDetails = await User.findOne({username: username});
   const isPasswordCorrect = bcrypt.compareSync(password, userDetails.password);
   if (isPasswordCorrect) {
-    //* when the user is logged in
+    //* generating a jwt token when the user is logged in
   jwt.sign({username, id: userDetails._id}, jwtSalt, {} , (error, token) => {
       if (error) throw error; 
+      // * set the token as a cookie and sending back the token with response header
       res.cookie('token', token).json('Ok!');
     })
   } else {
@@ -50,7 +55,9 @@ app.post('/login', async (req, res) => {
   }
 });
 
+// todo 👇 profile route to verify the user 
 app.get('/profile', (req, res) => {
+  // * destructuring token from cookies
   const {token} = req.cookies;
   jwt.verify(token, jwtSalt, {}, (error, info) => {
     if (error) throw error;
@@ -58,7 +65,9 @@ app.get('/profile', (req, res) => {
   });
 });
 
+// todo 👇 logout route
 app.post('/logout', (req, res) => {
+  // ? destroying the cookie by setting the token to empty 
   res.cookie('token', '').json('Ok!');
 })
 

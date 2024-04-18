@@ -12,7 +12,7 @@ export default function Login() {
       method: "POST",
       body: JSON.stringify({ username, password }),
       headers: { "Content-Type": "application/json" },
-      //! below code refers how to handle user-credentials, such as cookie or http authentication
+      //! 👇 refers how to handle user-credentials, such as cookie or http authentication
       credentials: "include", //? include tells the browser to always include the user credentials in the request
     });
     if (response.ok) {
@@ -22,9 +22,12 @@ export default function Login() {
     }
   }
 
+// ! Redirects the user to home page when redirect state is true
   if (redirect) {
     return <Navigate to={'/'} />
   }
+
+  
   return (
     <form className="login" onSubmit={login}>
       <h1>Login</h1>
