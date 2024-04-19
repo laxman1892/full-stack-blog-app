@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import "../App.css";
 import { Link } from "react-router-dom";
+import { UserContext } from "../UserContext";
 
 export default function Header() {
-  const [username, setUsername] = useState(null);
+  const {userInfo, setUserInfo} = useContext(UserContext);
   // ! fetching user data from '/profile' endpoint when the component mounts
   useEffect(() => {
     fetch("http://localhost:4000/profile", {
@@ -11,10 +12,11 @@ export default function Header() {
       credentials: "include",
     }).then((response) => {
       response.json().then((userInfo) => {
-        //  TODO update the username with the fetched usename
-        setUsername(userInfo.username);
+        //  TODO update the username with the fetched username
+        setUserInfo(userInfo);
       });
     });
+    // eslint-disable-next-line
   }, []);
 
   // ? sending post request to the '/logout' endpoint to handle user logout
@@ -23,8 +25,10 @@ export default function Header() {
       method: "POST",
       credentials: 'include',
      });
-     setUsername(null);
+     setUserInfo(null);
   } 
+
+  const username =  userInfo?.username;
 
   return (
     <>

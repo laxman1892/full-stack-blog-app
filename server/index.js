@@ -24,7 +24,7 @@ const db = mongoose.connection;
 db.once("connected", () => console.log("Connected to MongoDB!"));
 
 const salt = bcrypt.genSaltSync(10); // salt for password hashing
-const jwtSalt = 'lshjogihqwoihq209u523h5klhdklhfowieh'; //jwt salt for  signing tokens
+const jwtSalt = 'lshjogihqwoihq209u523h5klhdklhfowieh'; //jwt salt for signing tokens
 
 // todo 👇 signup route to get user details from the body and putting the details on database
 app.post('/signup', async (req, res) => {
@@ -48,7 +48,10 @@ app.post('/login', async (req, res) => {
   jwt.sign({username, id: userDetails._id}, jwtSalt, {} , (error, token) => {
       if (error) throw error; 
       // * set the token as a cookie and sending back the token with response header
-      res.cookie('token', token).json('Ok!');
+      res.cookie('token', token).json({
+        id: userDetails._id,
+        username,
+      });
     })
   } else {
     res.status(400).json('Wrong Credentials');
