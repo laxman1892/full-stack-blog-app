@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import "../App.css";
 import { Link } from "react-router-dom";
 import { UserContext } from "../UserContext";
-
+// comments
 export default function Header() {
   const {userInfo, setUserInfo} = useContext(UserContext);
   // ! fetching user data from '/profile' endpoint when the component mounts
