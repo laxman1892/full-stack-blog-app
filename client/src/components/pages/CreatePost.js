@@ -28,7 +28,7 @@ export default function CreatePost() {
     const [title, setTitle] = useState('');
     const [summary, setSummary] = useState('');
     const  [content, setContent] = useState('');
-    // comments
+    
 
     return (
         <form className='form' style={{height: '100px'}}>
