@@ -5,6 +5,8 @@ const User = require('./models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
+const multer = require('multer');
+const uploadMiddleware = multer({ dest: 'uploads/' });
 
 const app = express();
 
@@ -72,6 +74,11 @@ app.get('/profile', (req, res) => {
 app.post('/logout', (req, res) => {
   // ? destroying the cookie by setting the token to empty 
   res.cookie('token', '').json('Ok!');
+})
+
+// creating post route👇
+app.post('/post', uploadMiddleware.single('file') , (req, res) => {
+
 })
 
 app.listen(4000, () => {
