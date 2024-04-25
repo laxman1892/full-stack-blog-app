@@ -42,7 +42,7 @@ export default function Header() {
           {username && (
             <>
               <Link to="/create">Create new posts</Link>
-              <a href onClick={logout}>Logout</a>
+              <a style={{cursor: 'pointer'}} onClick={logout}>Logout</a>
             </>
           )}
           {/* 👇 if user is not logged in */}
