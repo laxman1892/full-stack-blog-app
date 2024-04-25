@@ -14,7 +14,7 @@ export default function Page() {
   return (
     <div>
         {posts.length > 0 && posts.map(post => (
-          <Post />
+          <Post {...post}/>
         ))}
     </div>
   )
