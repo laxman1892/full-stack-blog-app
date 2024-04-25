@@ -1,23 +1,34 @@
-import React from "react";
-import "../App.css";
+import { format } from "date-fns";
+import { Link } from "react-router-dom";
 
-export default function Post() {
+export default function Post({
+  _id,
+  author,
+  content,
+  cover,
+  createdAt,
+  summary,
+  title,
+}) {
   return (
     <>
       <div className="post">
         <div className="image">
-          <img
-            src="https://api.duniagames.co.id/api/content/upload/file/12663861181697455835.jpg"
-            alt=""
-          />
+          <Link to={`/post/${_id}`}>
+            <img src={"http://localhost:4000/" + cover} alt="" />
+          </Link>
         </div>
         <div className="texts">
-          <h2>Heading </h2>
+          <Link to={`/post/${_id}`}>
+            <h2>{title}</h2>
+          </Link>
           <p className="info">
-            <a href className="author">Laxman Rijal</a>
-            <time>2023-12-16 11:55</time>
+            <a href className="author">
+              {author.username}
+            </a>
+            <time>{format(new Date(createdAt), "MMM d, yyyy HH:mm")}</time>
           </p>
-          <p className="summary">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod molestie imperdiet. Vestibulum dapibus risus vel velit dignissim faucibus. Vestibulum interdum nisl at mattis luctus. Suspendisse volutpat arcu ante, eget vestibulum sapien tincidunt vel.</p>
+          <p className="summary">{summary}</p>
         </div>
       </div>
     </>
