@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import "../App.css";
 import { Link } from "react-router-dom";
 import { UserContext } from "../UserContext";
+// added comments
 
 export default function Header() {
   const {userInfo, setUserInfo} = useContext(UserContext);
